@@ -1,8 +1,93 @@
+<!DOCTYPE html>
+
 <html>
-<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE-edge"
+        <meta name="viewport", content="width=device-width, initial-scale=1.0">
+        <title>vebrthrg vbsx ghtsrhb</title>
+        <style>
+        label{
+            display: inline-block;
+            width: 80px;
+        }
+        </style>
+
+    </head>
+    <body>
+
+        <label>Name</label> <input id="Namebox" type="text">
+        <label>RollNo</label> <input id="Rollbox" type="text">
+        <label>Section</label> <input id="Secbox" type="text">
+
+        <hr>
+        <button id="Insbtn">insert</button>
+        <button id="Selbtn">select</button>
+        <button id="Updbtn">update</button>
+        <button id="Delbtn">delete</button>
+
+        <script type="module">
+
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-app.js";        
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-analytics.js";        
+            // TODO: Add SDKs for Firebase products that you want to use       
+            // https://firebase.google.com/docs/web/setup#available-libraries
+                 
+            // Your web app's Firebase configuration      
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional     
+            const firebaseConfig = {      
+              apiKey: "AIzaSyAn7o8yq6qhBSNtp9ZuOXv954_buNkBjyY",      
+              authDomain: "python-tutorial-ea1dc.firebaseapp.com",      
+              databaseURL: "https://python-tutorial-ea1dc-default-rtdb.europe-west1.firebasedatabase.app",     
+              projectId: "python-tutorial-ea1dc",
+              storageBucket: "python-tutorial-ea1dc.appspot.com",
+              messagingSenderId: "567906727469",
+              appId: "1:567906727469:web:a1f6f516d867b88ea0aaa4",
+              measurementId: "G-MVTH5M6FTB"
+            };
+          
+          
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+
+            import {getDatabase, ref, set, child, update, remove, } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-database.js";
+
+            const db = getDatabase();
+
+
+
+            var namebox = document.getElementById("Namebox");
+            var rollbox = document.getElementById("Rollbox");
+            var secbox = document.getElementById("Secbox");
+
+            var insbtn = document.getElementById("Insbtn")
+            var selbtn = document.getElementById("Selbtn")
+            var updbtn = document.getElementById("Updbtn")
+            var delbtn = document.getElementById("Delbtn")
+
+            function InsertData(){
+                set(ref(db, "Thestudents/"+rollbox.value),{
+                    NameofSTD: namebox.value, 
+                    Rollno: rollbox.value,
+                    section: secbox.value,
+                })
+                .then(()=> {
+                    alert("data stored sucefully")
+                })
+                .catch((error)=> {
+                    alert("error: "+error)
+                });
+            }
+
+
+            insbtn.addEventListener('click', InsertData);
+
+        </script>
+
+        
   
-<a href="test.exe" download style="padding: 0;">download test</a>
 
-
-</body>
-<html>
+    </body>
+</html>
