@@ -52,9 +52,11 @@
             const app = initializeApp(firebaseConfig);
             const analytics = getAnalytics(app);
 
-            import {getDatabase, ref, set, child, update, remove, } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-database.js";
+            import {getDatabase, ref, get, set, child, update, remove, } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-database.js";
 
             const db = getDatabase();
+
+
 
 
 
@@ -62,10 +64,10 @@
             var rollbox = document.getElementById("Rollbox");
             var secbox = document.getElementById("Secbox");
 
-            var insbtn = document.getElementById("Insbtn")
-            var selbtn = document.getElementById("Selbtn")
-            var updbtn = document.getElementById("Updbtn")
-            var delbtn = document.getElementById("Delbtn")
+            var insbtn = document.getElementById("Insbtn");
+            var selbtn = document.getElementById("Selbtn");
+            var updbtn = document.getElementById("Updbtn");
+            var delbtn = document.getElementById("Delbtn");
 
             function InsertData(){
                 set(ref(db, "Thestudents/"+rollbox.value),{
@@ -82,7 +84,31 @@
             }
 
 
+
+            function Selectdata(){
+                const dbref = ref(db);
+
+                get(child(dbref, "Thestudents/"+rollbox.value)).then((snapshot)=>{
+                    if(snapshot.exists()){
+                        namebox.value = snapshot.val().NameofSTD;
+                        secbox.value = snapshot.val().section;
+ 
+                    }
+
+                    else{
+                        alert("no data")
+                    }
+                })
+                .catch((error)=>{
+                    alert("error: "+error)
+                
+                });
+
+            }
+
+
             insbtn.addEventListener('click', InsertData);
+            selbtn.addEventListener('click', Selectdata);
 
         </script>
 

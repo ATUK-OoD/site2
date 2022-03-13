@@ -12,7 +12,7 @@ body {
 
     margin: 0;
     color: black;
-    background-image: url("backgimg.png");
+    /* background-image: url("backgimg.png"); */
     background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: 100% 100%; 
@@ -66,28 +66,117 @@ a:hover, a:active {
 
 }
 
-
-
 </style>
-</head>
-<body>
+    </head>
+    <body>
 
 
-<div class="cont_link">
+        <div class="cont_link">
 
-    <a href="https://atuk.netlify.app/">Menu</a>
+            <a href="https://atuk.netlify.app/">Menu</a>
 
-    <a href="/about_me">About me</a>
-    
-    <a href="/socials">Socials</a>
-    
-    <a href="/download">Download</a>
+            <a href="/about_me">About me</a>
+            
+            <a href="/socials">Socials</a>
+            
+            <a href="/download">Download</a>
 
-</div>
+        </div>
+
+        <div>
+            <table>
+                <thead>
+                    <th>name</th>
+                    <th>score</th>
+                    <th>game played</th>
+                </thead>
+                <tbody id="tbody1"></tbody>
+            </table>
+        </div>
+
+        <script type="module">
+
+            var scoreno = 0;
+            var game_pl = 0;
+            var tbody = document.getElementById("tbody1");
+
+            function AddItemToTable(name, scoreno, game_pl){
+                let trow = document.createElement("tr")
+                let td1 = document.createElement("td")
+                let td2 = document.createElement("td")
+                let td3 = document.createElement("td")
+
+                td1.innerHTML = name;
+                td2.innerHTML = ++scoreno;
+                td3.innerHTML = ++game_pl;
+
+                trow.appendChild(td1)
+                trow.appendChild(td2)
+                trow.appendChild(td3)
+
+                tbody.appendChild(trow)
+            }
+
+            function AddAllitemsToTable(player){
+                scoreno=0;
+                tbody.innerHTML="";
+                player.forEach(element => {
+                    AddItemToTable(element.name, element.score, element.game_pl);
+                });
+            }
+
+
+            // Import the functions you need from the SDKs you need
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-analytics.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+            apiKey: "AIzaSyAMcGa7MaoafywgmeM22K0_cS6qX9UJNRE",
+            authDomain: "spacechalenge.firebaseapp.com",
+            databaseURL: "https://spacechalenge-default-rtdb.firebaseio.com",
+            projectId: "spacechalenge",
+            storageBucket: "spacechalenge.appspot.com",
+            messagingSenderId: "14413838963",
+            appId: "1:14413838963:web:56dca08e10abf27f270806",
+            measurementId: "G-JPYDDGYTWX"
+            };
+            // Initialize Firebase
+            const app = initializeApp(firebaseConfig);
+            const analytics = getAnalytics(app);
+
+            import {getDatabase, ref, get, set, child, update, remove, } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-database.js";
+            const db = getDatabase();
 
 
 
-    
-</body>
-<html>
 
+
+            function GetAllDataOnce(){
+                const dbref = ref(db)
+
+                get(child(dbref, "game"))
+                .then((snapshot)=>{
+                    var players =[];
+                    snapshot.forEach(childSnapshot => {
+
+                        players.push(childSnapshot.val());
+                        
+                    });
+
+                    AddAllitemsToTable(players)
+
+                })
+            }
+
+            window.onload = GetAllDataOnce;
+
+        </script>
+        
+
+
+
+    </body>
+</html>
