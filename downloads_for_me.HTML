@@ -1,119 +1,239 @@
-<!DOCTYPE html>
-
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE-edge"
-        <meta name="viewport", content="width=device-width, initial-scale=1.0">
-        <title>vebrthrg vbsx ghtsrhb</title>
-        <style>
-        label{
-            display: inline-block;
-            width: 80px;
-        }
-        </style>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <title>useless site</title>
+
+    <link rel="shortcut icon" href="atuk.jpg" type="image/x-icon">
+
+<style>
+
+body {
+
+    margin: 0;
+    color: black;
+    /* background-image: url("backgimg.png"); */
+    background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%; 
+  font-family: Arial;
+  font-weight: 800;
+}
+
+.center {
+    text-align: center;
+}
+
+
+a:link, a:visited {
+  
+    
+
+  color: rgb(255, 127, 39);
+  background-color: none;
+  text-align: center;
+  text-decoration: none;
+  background-color: inherit;
+
+
+   padding-top: 60px;
+   padding-bottom: 60px;
+   padding-left: 5%;
+   padding-right: 5%;
+
+   transition: 0.3s;
+   font-size: 17px;
+}
+a:hover, a:active {
+    background-color:#006207;
+}
+
+
+.cont_link {
+    display: flex; /* or inline-flex */
+    justify-content: space-evenly;
+    background-color: white;
+
+
+
+}
+
+.cont_body {
+    display: flex; /* or inline-flex */
+    justify-content: space-evenly;
+
+}
+
+table, td, th {
+  border: 1px solid black;
+}
+
+table {
+  border-collapse: collapse;
+  width: 50%;
+}
+
+th {
+
+    text-align: center;
+    height: 100px;
+}
+
+td {
+  text-align: center;
+  background-color: black;
+  color: white;
+  height: 50px;
+}
+
+</style>
     </head>
     <body>
 
-        <label>Name</label> <input id="Namebox" type="text">
-        <label>RollNo</label> <input id="Rollbox" type="text">
-        <label>Section</label> <input id="Secbox" type="text">
 
-        <hr>
-        <button id="Insbtn">insert</button>
-        <button id="Selbtn">select</button>
-        <button id="Updbtn">update</button>
-        <button id="Delbtn">delete</button>
+        <div class="cont_link">
+
+            <a href="https://atuk.netlify.app/">Menu</a>
+
+            <a href="/about_me">About me</a>
+            
+            <a href="/socials">Socials</a>
+            
+            <a href="/download">Download</a>
+
+            <a href="/space_chalenge">Space chalenge</a>
+
+        </div>
+
+        <div class="cont_body">
+
+            <div style="padding: 10px; background-color: black; width: 50%; padding-bottom: 50px; padding-top: 50px;">  
+                <a href="spacechalenge2-2.1-armeabi-v7a-debug.apk" download style="padding: 0;">download Space Chalenge </a>
+            </div>
+
+            <div style="padding-left: 5px; background-color: rgb(255, 127, 39); width: 50%; padding-bottom: 50px; padding-top: 50px;">
+
+
+
+                
+                <table class="table table-sortable">
+                    <tr>
+                        <th>name</th>
+                        <th>score</th>
+                        <th>game played</th>
+                    </tr>
+                    <tbody id="tbody1"></tbody>
+                </table>
+            </div>
+        </div>
+
+
+
+
 
         <script type="module">
 
+            var scoreno = 0;
+            var game_pl = 0;
+            var tbody = document.getElementById("tbody1");
+
+            function AddItemToTable(name, scoreno, game_pl){
+                let trow = document.createElement("tr")
+                let td1 = document.createElement("td")
+                let td2 = document.createElement("td")
+                let td3 = document.createElement("td")
+
+                td1.innerHTML = name;
+                td2.innerHTML = scoreno;
+                td3.innerHTML = game_pl;
+
+                trow.appendChild(td1)
+                trow.appendChild(td2)
+                trow.appendChild(td3)
+
+                tbody.appendChild(trow)
+            }
+
+            function AddAllitemsToTable(player){
+                scoreno=0;
+                tbody.innerHTML="";
+                player.forEach(element => {
+                    AddItemToTable(element.name, element.score, element.game_pl);
+                });
+            }
+
+
             // Import the functions you need from the SDKs you need
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-app.js";        
-            import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-analytics.js";        
-            // TODO: Add SDKs for Firebase products that you want to use       
+            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-app.js";
+            import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-analytics.js";
+            // TODO: Add SDKs for Firebase products that you want to use
             // https://firebase.google.com/docs/web/setup#available-libraries
-                 
-            // Your web app's Firebase configuration      
-            // For Firebase JS SDK v7.20.0 and later, measurementId is optional     
-            const firebaseConfig = {      
-              apiKey: "AIzaSyAn7o8yq6qhBSNtp9ZuOXv954_buNkBjyY",      
-              authDomain: "python-tutorial-ea1dc.firebaseapp.com",      
-              databaseURL: "https://python-tutorial-ea1dc-default-rtdb.europe-west1.firebasedatabase.app",     
-              projectId: "python-tutorial-ea1dc",
-              storageBucket: "python-tutorial-ea1dc.appspot.com",
-              messagingSenderId: "567906727469",
-              appId: "1:567906727469:web:a1f6f516d867b88ea0aaa4",
-              measurementId: "G-MVTH5M6FTB"
+            // Your web app's Firebase configuration
+            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+            const firebaseConfig = {
+            apiKey: "AIzaSyAMcGa7MaoafywgmeM22K0_cS6qX9UJNRE",
+            authDomain: "spacechalenge.firebaseapp.com",
+            databaseURL: "https://spacechalenge-default-rtdb.firebaseio.com",
+            projectId: "spacechalenge",
+            storageBucket: "spacechalenge.appspot.com",
+            messagingSenderId: "14413838963",
+            appId: "1:14413838963:web:56dca08e10abf27f270806",
+            measurementId: "G-JPYDDGYTWX"
             };
-          
-          
             // Initialize Firebase
             const app = initializeApp(firebaseConfig);
             const analytics = getAnalytics(app);
 
             import {getDatabase, ref, get, set, child, update, remove, } from "https://www.gstatic.com/firebasejs/9.6.8/firebase-database.js";
-
             const db = getDatabase();
 
 
 
 
 
-            var namebox = document.getElementById("Namebox");
-            var rollbox = document.getElementById("Rollbox");
-            var secbox = document.getElementById("Secbox");
+            function GetAllDataOnce(){
+                const dbref = ref(db)
 
-            var insbtn = document.getElementById("Insbtn");
-            var selbtn = document.getElementById("Selbtn");
-            var updbtn = document.getElementById("Updbtn");
-            var delbtn = document.getElementById("Delbtn");
+                get(child(dbref, "game"))
+                .then((snapshot)=>{
+                    var players =[];
+                    snapshot.forEach(childSnapshot => {
 
-            function InsertData(){
-                set(ref(db, "Thestudents/"+rollbox.value),{
-                    NameofSTD: namebox.value, 
-                    Rollno: rollbox.value,
-                    section: secbox.value,
+                        players.push(childSnapshot.val());
+                        
+                    });
+
+                    AddAllitemsToTable(players)
+
                 })
-                .then(()=> {
-                    alert("data stored sucefully")
-                })
-                .catch((error)=> {
-                    alert("error: "+error)
-                });
+            }
+
+            window.onload = GetAllDataOnce;
+
+
+
+            /**
+             * Sorts a HTML table.
+             * 
+             * @param {HTMLTableElement} table The table to sort
+             * @param {number} column The index of the column to sort
+             * @param {boolean} asc Determines if the sorting will be in ascending
+             */
+
+            function sorttablebycolumn(table, column, asc = true){
+
+                const tBody = table.tBodies[0];
+                const rows = Array.from(tBody.querySelectorAll("tr"))
+
             }
 
 
 
-            function Selectdata(){
-                const dbref = ref(db);
-
-                get(child(dbref, "Thestudents/"+rollbox.value)).then((snapshot)=>{
-                    if(snapshot.exists()){
-                        namebox.value = snapshot.val().NameofSTD;
-                        secbox.value = snapshot.val().section;
- 
-                    }
-
-                    else{
-                        alert("no data")
-                    }
-                })
-                .catch((error)=>{
-                    alert("error: "+error)
-                
-                });
-
-            }
-
-
-            insbtn.addEventListener('click', InsertData);
-            selbtn.addEventListener('click', Selectdata);
 
         </script>
-
         
-  
+
+
 
     </body>
 </html>
